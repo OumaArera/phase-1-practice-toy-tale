@@ -23,23 +23,25 @@ const displayAllToy = toyName => {
   let card = document.createElement("li");
   card.setAttribute("data-toy-id", toyName.id);
   card.id = "toy";
+  toyId = toyName.id;
+  currentLikes = toyName.likes;
   card.innerHTML = `
   <div class = "c-container">
     <h2 class="name-t">${toyName.name}</h2>
     <img src='${toyName.image}' class="toy-avatar" >
-      <p>Likes: <span> ${toyName.likes}</span></p>
+      <p id='likes'>Likes: <span> ${toyName.likes}</span></p>
       <button class="like-btn" id="${toyName.id}">Like ❤️</button>
   </div>
   `;
   document.querySelector("#toy-collection").appendChild(card)
 }
 
-let name = document.querySelector(".input-text");
-let image = document.querySelector("#inputText");
+let newName = document.querySelector(".input-text");
+let newImage = document.querySelector("#inputText");
 
 let newToy = {
-  name: name,
-  image: image,
+  name: newName,
+  image: newImage,
   likes: 0
 }
 const addNewToy = () => {
@@ -55,3 +57,22 @@ const addNewToy = () => {
   .catch(err => console.log(err))
 }
 document.querySelector(".submit").addEventListener('click', event => {event.preventDefault();addNewToy()})
+
+const updateLikes = () =>{
+  document.querySelector(".like-btn").addEventListener('click', e =>{
+    e.preventDefault()
+    currentLikes += 1;
+
+    fetch(`http://localhost:3000/toys/${toyId}`, {
+      method: "PATCH",
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({likes:currentLikes})
+    })
+    .then(res => res.json())
+    .then(() => document.querySelector("#likes").textContent = `Likes: ${currentLikes}`)
+    .catch(err => console.log(err))
+  })
+}
