@@ -31,6 +31,7 @@
           value=""
           placeholder="Enter a toy's image URL..."
           class="input-text"
+          id="inputText"
         />
         <br />
         <input
@@ -38,6 +39,7 @@
           name="submit"
           value="Create Toy"
           class="submit"
+         
         />
       </form>
     </div>
@@ -45,7 +47,8 @@
       Andy needs your help! <button id="new-toy-btn">Add a new toy!</button>
     </p>
 
-    <div id="toy-collection"></div>
+    <div id="toy-collection" class="card"></div>
     <script type="text/javascript" src="src/index.js"></script>
+    <script type="text/json" src="db.json"></script>
   </body>
 </html>
